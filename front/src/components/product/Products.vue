@@ -1,13 +1,10 @@
 <template>
-    <div>
-        <ul>
-            <li v-for="product in products">
-                {{product.name}}
-            </li>
-        </ul>
+    <div class="row">
+        <comProduct v-for="product in products" :product="product" key="product.id"></comProduct>
     </div>
 </template>
 <script>
+import comProduct from './Product'
 export default {
     data() {
         return {
@@ -18,7 +15,14 @@ export default {
         this.$http.get('api/products').
             then(responese => {
                 this.products = responese.body
+                //console.log(responese.body)
             })
+    },
+    components: {
+        comProduct
     }
 }
 </script>
+<style>
+
+</style>

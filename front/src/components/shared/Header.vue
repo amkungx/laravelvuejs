@@ -10,9 +10,13 @@
     
             <b-collapse is-nav id="nav_collapse">
     
-                <b-nav is-nav-bar>
+                <b-nav is-nav-bar v-if="!isAuth">
                     <b-nav-item to="/login">Login</b-nav-item>
                     <b-nav-item to="/register">Register</b-nav-item>
+                </b-nav>
+                <b-nav is-nav-bar v-if="isAuth">
+                    <b-nav-item to="/products">Products</b-nav-item>
+                    <b-nav-item to="/logout">Logout</b-nav-item>
                 </b-nav>
     
                 <b-nav is-nav-bar class="ml-auto">
@@ -39,7 +43,14 @@
 </template>
 <script>
 export default {
-
+    data () {
+        return {
+            isAuth: null
+        }
+    },
+    created () {
+        this.isAuth = this.$auth.isAuthenticated()
+    }
 }
 </script>
 <style>

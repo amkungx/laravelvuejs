@@ -10,7 +10,6 @@
                 <label for="exampleInputPassword1">Password</label>
                 <input v-model="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
             </div>
-            <button @click="test" class="btn btn-primary">test</button>
             <button @click="login" class="btn btn-primary">Submit</button>
         </div>
     </div>
@@ -19,7 +18,7 @@
 export default {
     data() {
         return {
-            email: 'jaylen61@example.org',
+            email: 'olson.cole@example.org',
             password: 'secret'
         }
     },
@@ -27,20 +26,20 @@ export default {
         login() {
             var data = {
                 client_id: 2,
-                client_secret: 'ROT18QFZf39JLdRhmUBfDsZQPY41ClyeHu4W3FKr',
+                client_secret: 'N8OIYJz60EyNMqIAPJfHTGeJmrWZNGuwiHc6gD4E',
                 grant_type: 'password',
                 username: this.email,
                 password: this.password
             }
             //console.log(data)
-            this.$http.post("http://localhost:8000/oauth/token", data).
+            this.$http.post("oauth/token", data).
                 then(function (response) {
                     this.$auth.setToken(response.body.access_token, response.body.expires_in + Date.now())
-                    this.$router.push('/feed')
+                    this.$router.push('/products')
                 })
         },
         test(){
-            this.$http.get("http://localhost:8000/api/test").
+            this.$http.get("api/test").
             then(response=>{
                 console.log(response);
             })

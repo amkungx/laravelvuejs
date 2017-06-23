@@ -1,8 +1,12 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
+
 import VueResource from 'vue-resource'
+Vue.use(VueResource);
+
 import Auth from './packages/Auth'
+Vue.use(Auth);
 
 import App from './App'
 import router from './router'
@@ -11,6 +15,7 @@ import router from './router'
 import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+Vue.use(BootstrapVue);
 
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
@@ -18,11 +23,13 @@ import Icon from 'vue-awesome/components/Icon'
 // Icon.register(icons_custom)
 Vue.component('icon', Icon)
 
-Vue.use(Auth);
-Vue.use(VueResource);
-//Vue.http.options.root = 'https://fir-cd77b.firebaseio.com/'
+import Vue2Filters from 'vue2-filters'
+Vue.use(Vue2Filters)
 
-Vue.use(BootstrapVue);
+//Vue.http.options.root = 'https://fir-cd77b.firebaseio.com/'
+Vue.http.options.root = 'http://localhost:8000'
+Vue.http.headers.common['Authorization'] = 'Bearer ' + Vue.auth.getToken()
+
 Vue.config.productionTip = false
 
 router.beforeEach(
@@ -30,7 +37,7 @@ router.beforeEach(
     if (to.matched.some(record => record.meta.forVisitors)) {
       if (Vue.auth.isAuthenticated()) {
         next({
-          path: '/feed'
+          path: '/products'
         })
       } else next()
     }

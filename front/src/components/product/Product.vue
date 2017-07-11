@@ -6,6 +6,8 @@
                 <h4 class="card-title">{{ product.name }}</h4>
                 <p class="card-text">{{ product.description | truncate(50) }}</p>
                 <a href="#" class="btn btn-primary">Buy</a>
+                <router-link class="btn btn-success" role="button" :to="'products/' + product.id + '/update'">Edit</router-link>
+                <a href="#" class="btn btn-danger" @click="$emit('deleteProduct')">Delete</a>
             </div>
         </div>
     </div>

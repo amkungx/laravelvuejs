@@ -18,7 +18,7 @@
 export default {
     data() {
         return {
-            email: 'olson.cole@example.org',
+            email: 'amkungx@gmail.com',
             password: 'secret'
         }
     },
@@ -35,7 +35,7 @@ export default {
             this.$http.post("oauth/token", data).
                 then(function (response) {
                     this.$auth.setToken(response.body.access_token, response.body.expires_in + Date.now())
-                    this.$router.push('/products')
+                    this.$router.push('/Home')
                 })
         },
         test(){

@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col-md-6 mx-auto">
-            <h5 class="text-right">Create product</h5>
+            <h5 class="text-right">Update product</h5>
             <div class="form-control clearfix">
                 <div class="form-group">
                     <label>Name</label>
@@ -17,7 +17,7 @@
                     <textarea class="form-control" v-model="product.description"></textarea>
                 </div>
                 <router-link class="btn btn-success" role="button" :to="'/products'">Cancel</router-link>
-                <button class="btn btn-primary float-right" :disabled="!product.name || !product.price" @click="create">Submit</button>
+                <button class="btn btn-primary float-right" :disabled="!product.name || !product.price" @click="update">Submit</button>
             </div>
         </div>
     </div>
@@ -26,16 +26,21 @@
 export default {
     data() {
         return {
-            product: {
-                name: null,
-                price: null,
-                description: null
-            }
+            product: {}
         }
     },
+    created() {
+        this.getProduct()
+    },
     methods: {
-        create() {
-            this.$http.post('api/products', this.product)
+        getProduct() {
+            this.$http.get('api/products/' + this.$route.params.product)
+                .then(response => {
+                    this.product = response.body
+                })
+        },
+        update() {
+            this.$http.put('api/products/' + this.$route.params.product, this.product)
                 .then(response => {
                     this.$router.push('/products')
                 })

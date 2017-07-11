@@ -10,12 +10,14 @@
     
             <b-collapse is-nav id="nav_collapse">
     
-                <b-nav is-nav-bar v-if="!isAuth">
+                <b-nav is-nav-bar v-if="!$auth.getToken()">
                     <b-nav-item to="/login">Login</b-nav-item>
                     <b-nav-item to="/register">Register</b-nav-item>
-                </b-nav>
-                <b-nav is-nav-bar v-if="isAuth">
                     <b-nav-item to="/products">Products</b-nav-item>
+                </b-nav>
+                <b-nav is-nav-bar v-if="$auth.getToken()">
+                    <b-nav-item to="/products">Products</b-nav-item>
+                    <b-nav-item to="/products/create">Create</b-nav-item>
                     <b-nav-item to="/logout">Logout</b-nav-item>
                 </b-nav>
     
@@ -43,13 +45,25 @@
 </template>
 <script>
 export default {
-    data () {
+    data() {
         return {
             isAuth: null
         }
     },
-    created () {
-        this.isAuth = this.$auth.isAuthenticated()
+    created() {
+        if(this.$auth.isAuthenticated()){
+            this.isAuth = this.$auth.isAuthenticated()
+            this.setAuthenticatedUser()
+        }
+    },
+    methods: {
+        setAuthenticatedUser() {
+            this.$http.get('api/user')
+                .then(response => {
+                    this.$auth.setAuthenticatedUser(response.body)
+                    console.log(this.$auth.getAuthenticatedUser())
+                })
+        }
     }
 }
 </script>

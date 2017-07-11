@@ -7,6 +7,7 @@ import comRegister from '@/components/authentication/Register'
 import comFeed from '@/components/Feed'
 import comProducts from '@/components/product/Products'
 import comProductsCreate from '@/components/product/Create'
+import comProductsUpdate from '@/components/product/Update'
 
 Vue.use(Router)
 
@@ -20,6 +21,7 @@ export default new Router({
     //{ path: '/logout', name: 'Logout', component: comLogout, meta: { forAuth: true } },
     { path: '/feed', name: 'Feed', component: comFeed, meta: { forAuth: true } },
     { path: '/products', name: 'Products', component: comProducts, meta: { forAuth: true } },
-    { path: '/products/create', name: 'ProductsCreate', component: comProductsCreate, meta: { forAuth: true } }
+    { path: '/products/create', name: 'ProductsCreate', component: comProductsCreate, meta: { forAuth: true } },
+    { path: '/products/:product/update', name: 'ProductsUpdate', component: comProductsUpdate, meta: { forAuth: true } }
   ]
 })
